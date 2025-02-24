@@ -11,11 +11,11 @@ jobs:
     name: Build
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: install tuist
-      - run: brew tap tuist/tuist
-      - run: brew install --formula tuist@4.43.1
-      - name: install swiftLint
-      - run: brew install swiftlint
-      - name: bild
-      - run: tuist build
+      uses: actions/checkout@v4
+      name: install tuist
+      run: brew tap tuist/tuist
+      run: brew install --formula tuist@4.43.1
+      name: install swiftLint
+      run: brew install swiftlint
+      name: bild
+      run: tuist build
