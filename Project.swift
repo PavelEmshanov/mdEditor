@@ -32,6 +32,8 @@ private let scripts: [TargetScript] = [
 	swiftLintTargetScript
 ]
 
+
+
 let project = Project(
 	name: "mdEditor",
 	settings: .settings(
@@ -61,7 +63,9 @@ let project = Project(
 			sources: ["mdEditor/Sources/**"],
 			resources: ["mdEditor/Resources/**"],
 			scripts: scripts,
-			dependencies: []
+			dependencies: [
+				.package(product: "mdEditor", type: .macro)
+			]
 		),
 		.target(
 			name: "mdEditorTests",
