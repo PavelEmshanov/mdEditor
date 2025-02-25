@@ -1,0 +1,18 @@
+xcassets:
+  inputs:
+    - mdEditor/Resources/Assets.xcassets
+  outputs:
+    - templateName: swift5
+      output: mdEditor/Sources/Generated/Assets.swift
+#strings:
+#  inputs:
+#    - mdEditor/Resources/Localizable.strings
+#  outputs:
+#    - templateName: structured-swift5
+#      output: mdEditor/Sources/Generated/Strings.swift
+#fonts:
+#  inputs:
+#    - mdEditor/Resources/Fonts
+#  outputs:
+#    - templateName: swift5
+#      output: mdEditor/Sources/Generated/Fonts.swift

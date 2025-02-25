@@ -1,0 +1,18 @@
+name: build
+on:
+  pull_request:
+    branches:
+      - dev
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew tap tuist/tuist
+      - run: brew install --formula tuist@4.43.1
+      - run: tuist build
+  
