@@ -68,6 +68,3 @@ Derived/
 
 ### Tuist managed dependencies ###
 Tuist/.build
-
-### swiftGen generated files###
-mdEditor/Sources/Generated
