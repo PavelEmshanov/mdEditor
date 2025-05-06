@@ -1,9 +1,10 @@
 import XCTest
+@testable import mdEditor
 
 // swiftlint:disable force_cast
 
 final class UIColorHexTests: XCTestCase {
-
+	
 	func test_init_withValidParameters_shouldBeInitSuccess() {
 		let red: UInt8 = 0x26
 		let green: UInt8 = 0xea
@@ -11,7 +12,6 @@ final class UIColorHexTests: XCTestCase {
 		let alpha: UInt8 = 0xff
 		let expectedColor = UIColor(red: 0x26 / 255.0, green: 0xea / 255.0, blue: 0x58 / 255.0, alpha: 1)
 
-		let newSut = UIColor(
 		let sut = UIColor(red: red, green: green, blue: blue, alpha: alpha)
 
 		XCTAssertEqual(sut, expectedColor, "Ошибка создания цвета")
