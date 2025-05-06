@@ -12,8 +12,8 @@
 
 	// MARK: - Dependencies
 
-	private var orderedTaskManager: OrderedTaskManager!
-	private var appCoordinator: IAppCoordinator!
+	private var orderedTaskManager: OrderedTaskManager! // swiftlint:disable:this implicitly_unwrapped_optional
+	private var appCoordinator: IAppCoordinator! // swiftlint:disable:this implicitly_unwrapped_optional
 
 	// MARK: - Lifecycle
 
