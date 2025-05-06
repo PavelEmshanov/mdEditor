@@ -10,50 +10,15 @@ enum ProjectSettings {
 	public static var bundleId: String { "\(organizationName).\(projectName)" }
 }
 
-private var swiftLintTargetScript: TargetScript {
-	let swiftLintScriptString = """
-  export PATH="$PATH:/opt/homebrew/bin"
-  if which swiftlint > /dev/null; then
-  swiftlint --fix && swiftlint
-  else
-  echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-  exit 1
-  fi
-  """
-	
-	return TargetScript.pre(
-		script: swiftLintScriptString,
-		name: "Run SwiftLint",
-		basedOnDependencyAnalysis: false
-	)
-}
-
-private var swiftGenTargetScript: TargetScript {
-	let swiftGenScriptString = """
-export PATH="$PATH:/opt/homebrew/bin"
-if which swiftgen >/dev/null; then
-  swiftgen config run
-else
-  echo "warning: SwiftGen not installed, download from https://github.com/SwiftGen/SwiftGen"
-fi
-"""
-
-	return TargetScript.pre(
-		script: swiftGenScriptString,
-		name: "Run SwiftGen",
-		basedOnDependencyAnalysis: false
-	)
-}
-
-private let scripts: [TargetScript] = [
-	swiftLintTargetScript,
-	swiftGenTargetScript
-]
-
-
+let swiftLintScriptBody = "SwiftLint/swiftlint --fix && SwiftLint/swiftlint"
+let swiftLintScript = TargetScript.post(script: swiftLintScriptBody, name: "SwiftLint", basedOnDependencyAnalysis: false)
 
 let project = Project(
 	name: "mdEditor",
+	packages: [
+		.local(path: .relativeToManifest("../mdEditor/Package/TaskManagerPackage")),
+		.local(path: .relativeToManifest("../mdEditor/Package/DataStructuresPackage")),
+	],
 	settings: .settings(
 		base: [
 			"DEVELOPMENT_TEAM": "\(ProjectSettings.developmentTeam)",
@@ -70,25 +35,18 @@ let project = Project(
 			product: .app,
 			bundleId: "PavelEmshanov.mdEditor",
 			deploymentTargets: .iOS(ProjectSettings.targetVersion),
-			infoPlist: .extendingDefault(
-				with: [
-					"UILaunchScreen": [
-						"UIColorName": "",
-						"UIImageName": "",
-					],
-				]
-			),
-			sources: ["mdEditor/Sources/**"],
+			infoPlist: "Environments/Info.plist",
+			sources: ["mdEditor/Sources/**", "mdEditor/Shared/**"],
 			resources: ["mdEditor/Resources/**"],
-			scripts: scripts,
-			dependencies: []
+			scripts: [swiftLintScript],
+			dependencies: [.package(product: "DataStructuresPackage"), .package(product: "TaskManagerPackage")]
 		),
 		.target(
 			name: "mdEditorTests",
 			destinations: .iOS,
 			product: .unitTests,
 			bundleId: "PavelEmshanov.mdEditorTests",
-			infoPlist: .default,
+			deploymentTargets: .iOS(ProjectSettings.targetVersion),
 			sources: ["mdEditor/Tests/**"],
 			resources: [],
 			dependencies: [.target(name: "mdEditor")]

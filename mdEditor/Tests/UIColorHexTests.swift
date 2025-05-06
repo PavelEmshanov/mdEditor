@@ -1,12 +1,4 @@
-//
-//  UIColorHexTests.swift
-//  TodoListTests
-//
-//  Created by Kirill Leonov on 31.03.2023.
-//
-
 import XCTest
-@testable import TodoList
 
 // swiftlint:disable force_cast
 
@@ -19,6 +11,7 @@ final class UIColorHexTests: XCTestCase {
 		let alpha: UInt8 = 0xff
 		let expectedColor = UIColor(red: 0x26 / 255.0, green: 0xea / 255.0, blue: 0x58 / 255.0, alpha: 1)
 
+		let newSut = UIColor(
 		let sut = UIColor(red: red, green: green, blue: blue, alpha: alpha)
 
 		XCTAssertEqual(sut, expectedColor, "Ошибка создания цвета")
