@@ -95,7 +95,7 @@ extension TodoListViewController {
 private extension TodoListViewController {
 
 	private func setupUI() {
-		title = "TodoList"
+		title = L10n.titleTodoList
 		navigationItem.setHidesBackButton(true, animated: true)
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 

@@ -89,20 +89,23 @@ private extension CreateTaskViewController {
 		button.configuration = .filled()
 		button.configuration?.cornerStyle = .medium
 		button.configuration?.baseBackgroundColor = .red
-		button.configuration?.title = "Создать задание"
+		button.configuration?.title = L10n.buttonCreateTask
 		return button
 	}
 
 	func makeTextField() -> UITextField {
 		let textField = UITextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
-		textField.placeholder = "Введите название задания"
+		textField.placeholder = L10n.enterNamePlaceholder
 		textField.borderStyle = .roundedRect
 		return textField
 	}
 
 	func makeTypeSegmentedControl() -> UISegmentedControl {
-		let items = ["Обычное", "Важное"]
+		let items = [
+			L10n.normalItemsForSegmentedControl,
+			L10n.importantItemsForSegmentedControl
+		]
 		let segmentedControl = UISegmentedControl(items: items)
 		segmentedControl.translatesAutoresizingMaskIntoConstraints = false
 		segmentedControl.selectedSegmentIndex = 0
@@ -112,7 +115,7 @@ private extension CreateTaskViewController {
 	func makePriorityLabel() -> UILabel {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = "Приоритет (только для важных заданий):"
+		label.text = L10n.priorityLabel
 		label.isHidden = true
 		return label
 	}
@@ -129,7 +132,7 @@ private extension CreateTaskViewController {
 
 	func setupUI() {
 		view.backgroundColor = .white
-		title = "Создание задания"
+		title = L10n.titleCreateTask
 		navigationController?.navigationBar.prefersLargeTitles = true
 		buttonCreateTask.isEnabled = false
 		

@@ -8,7 +8,6 @@
 import UIKit
 
 // Всегда старайтесь, чтобы view была описана полностью моделью ViewModel, это облегчает тестирование
-// и обработку информации. По сути View должна быть настолько простой, что името только 1 метод для клиента
 protocol ILoginViewController: AnyObject {}
 
 final class LoginViewController: UIViewController {
@@ -67,8 +66,8 @@ private extension LoginViewController {
 	func makeTextField() -> UITextField {
 		let textField = UITextField()
 
-		textField.backgroundColor = .white
-		textField.textColor = .black
+		textField.backgroundColor = Theme.backgroundColor
+		textField.textColor = Theme.mainColor
 		textField.layer.borderWidth = Sizes.borderWidth
 		textField.layer.cornerRadius = Sizes.cornerRadius
 		textField.layer.borderColor = UIColor.lightGray.cgColor
@@ -87,7 +86,7 @@ private extension LoginViewController {
 		button.configuration = .filled()
 		button.configuration?.cornerStyle = .medium
 		button.configuration?.baseBackgroundColor = .red
-		button.configuration?.title = "Login"
+		button.configuration?.title = L10n.loginButton
 		button.addTarget(self, action: #selector(login), for: .touchUpInside)
 
 		button.translatesAutoresizingMaskIntoConstraints = false
@@ -96,13 +95,13 @@ private extension LoginViewController {
 	}
 
 	func setupUI() {
-		view.backgroundColor = .white
-		title = "Authorization"
+		view.backgroundColor = Theme.backgroundColor
+		title = L10n.authorization
 		navigationController?.navigationBar.prefersLargeTitles = true
 
 		// Кастомная конфигурация наших полей
-		textFieldLogin.placeholder = "Login"
-		textFieldPass.placeholder = "Password"
+		textFieldLogin.placeholder = L10n.loginPlaceholder
+		textFieldPass.placeholder = L10n.password
 		textFieldPass.isSecureTextEntry = true
 
 		view.addSubview(textFieldLogin)

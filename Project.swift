@@ -35,7 +35,7 @@ let project = Project(
 			product: .app,
 			bundleId: "PavelEmshanov.mdEditor",
 			deploymentTargets: .iOS(ProjectSettings.targetVersion),
-			infoPlist: "Environments/Info.plist",
+			infoPlist: .file(path: "Environments/Info.plist"),
 			sources: ["mdEditor/Sources/**", "mdEditor/Shared/**"],
 			resources: ["mdEditor/Resources/**"],
 			scripts: [swiftLintScript],
@@ -51,5 +51,6 @@ let project = Project(
 			resources: [],
 			dependencies: [.target(name: "mdEditor")]
 		),
-	]
+	],
+	resourceSynthesizers: [.strings()]
 )
