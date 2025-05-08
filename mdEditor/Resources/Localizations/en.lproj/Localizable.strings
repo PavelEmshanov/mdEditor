@@ -1,0 +1,16 @@
+// Login scene
+"login_button" = "Login";
+"login_placeholder" = "Login";
+"password" = "Password";
+"authorization" = "Authorization";
+
+// TodoList scene
+"title_todoList" = "TodoList";
+
+// Create task scene
+"button_create_task" = "Create task";
+"enter_name_placeholder" = "Enter name task";
+"normal_items_for_segmented_control" = "Normal";
+"important_items_for_segmented_control" = "Important";
+"priority_label" = "Priority (for important tasks only):";
+"title_create_task" = "Create task";
