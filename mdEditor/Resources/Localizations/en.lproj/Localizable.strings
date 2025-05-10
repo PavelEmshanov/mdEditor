@@ -1,16 +1,16 @@
 // Login scene
-"login_button" = "Login";
-"login_placeholder" = "Login";
-"password" = "Password";
-"authorization" = "Authorization";
+"Authorization.login_button" = "Login";
+"Authorization.login_placeholder" = "Login";
+"Authorization.password" = "Password";
+"Authorization.title" = "Authorization";
 
 // TodoList scene
-"title_todoList" = "TodoList";
+"TodoList.title" = "TodoList";
 
 // Create task scene
-"button_create_task" = "Create task";
-"enter_name_placeholder" = "Enter name task";
-"normal_items_for_segmented_control" = "Normal";
-"important_items_for_segmented_control" = "Important";
-"priority_label" = "Priority (for important tasks only):";
-"title_create_task" = "Create task";
+"Create_task.create_button" = "Create";
+"Create_task.name_placeholder" = "Enter name task";
+"Create_task.normal_item" = "Normal";
+"Create_task.important_item" = "Important";
+"Create_task.priority_label" = "Priority (for important tasks only):";
+"Create_task.title" = "Create task";

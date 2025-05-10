@@ -1,16 +1,16 @@
 // Login scene
-"login_button" = "Войти";
-"login_placeholder" = "Логин";
-"password" = "Пароль";
-"authorization" = "Авторизация";
+"Authorization.login_button" = "Войти";
+"Authorization.login_placeholder" = "Логин";
+"Authorization.password" = "Пароль";
+"Authorization.title" = "Авторизация";
 
 // TodoList scene
-"title_todoList" = "Задачи";
+"TodoList.title" = "Список задач";
 
 // Create task scene
-"button_create_task" = "Создать задание";
-"enter_name_placeholder" = "Введите название задания";
-"normal_items_for_segmented_control" = "Обычное";
-"important_items_for_segmented_control" = "Важное";
-"priority_label" = "Приоритет (только для важных заданий):";
-"title_create_task" = "Создание задания";
+"Create_task.create_button" = "Создать";
+"Create_task.name_placeholder" = "Введите название задания";
+"Create_task.normal_item" = "Обычное";
+"Create_task.important_item" = "Важное";
+"Create_task.priority_label" = "Приоритет (только для важных заданий):";
+"Create_task.title" = "Создание задания";

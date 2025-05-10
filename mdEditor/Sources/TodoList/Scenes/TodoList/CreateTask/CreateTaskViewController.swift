@@ -85,43 +85,53 @@ private extension CreateTaskViewController {
 
 	func makeCreateTaskButton() -> UIButton {
 		let button = UIButton()
-		button.translatesAutoresizingMaskIntoConstraints = false
 		button.configuration = .filled()
 		button.configuration?.cornerStyle = .medium
-		button.configuration?.baseBackgroundColor = .red
-		button.configuration?.title = L10n.buttonCreateTask
+		button.configuration?.baseBackgroundColor = Theme.accentColor
+		button.configuration?.title = L10n.CreateTask.createButton
+		button.titleLabel?.adjustsFontForContentSizeCategory = true
+		button.translatesAutoresizingMaskIntoConstraints = false
 		return button
 	}
 
 	func makeTextField() -> UITextField {
 		let textField = UITextField()
+		textField.backgroundColor = Theme.backgroundColor
+		textField.textColor = Theme.mainColor
 		textField.translatesAutoresizingMaskIntoConstraints = false
-		textField.placeholder = L10n.enterNamePlaceholder
+		textField.placeholder = L10n.CreateTask.namePlaceholder
 		textField.borderStyle = .roundedRect
+
+		textField.font = UIFont.preferredFont(forTextStyle: .callout)
+		textField.adjustsFontForContentSizeCategory = true
 		return textField
 	}
 
 	func makeTypeSegmentedControl() -> UISegmentedControl {
 		let items = [
-			L10n.normalItemsForSegmentedControl,
-			L10n.importantItemsForSegmentedControl
+			L10n.CreateTask.normalItem,
+			L10n.CreateTask.importantItem
 		]
 		let segmentedControl = UISegmentedControl(items: items)
+		segmentedControl.selectedSegmentTintColor = Theme.backgroundColor
 		segmentedControl.translatesAutoresizingMaskIntoConstraints = false
 		segmentedControl.selectedSegmentIndex = 0
+
 		return segmentedControl
 	}
 
 	func makePriorityLabel() -> UILabel {
 		let label = UILabel()
+		label.textColor = Theme.mainColor
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = L10n.priorityLabel
+		label.text = L10n.CreateTask.priorityLabel
 		label.isHidden = true
 		return label
 	}
 
 	func makePrioritySlider() -> UISlider {
 		let slider = UISlider()
+		slider.tintColor = Theme.accentColor
 		slider.translatesAutoresizingMaskIntoConstraints = false
 		slider.minimumValue = 0
 		slider.maximumValue = 2
@@ -131,8 +141,8 @@ private extension CreateTaskViewController {
 	}
 
 	func setupUI() {
-		view.backgroundColor = .white
-		title = L10n.titleCreateTask
+		view.backgroundColor = Theme.backgroundColor
+		title = L10n.CreateTask.title
 		navigationController?.navigationBar.prefersLargeTitles = true
 		buttonCreateTask.isEnabled = false
 		
@@ -185,8 +195,18 @@ private extension CreateTaskViewController {
 
 			buttonCreateTask.topAnchor.constraint(equalTo: sliderPriority.bottomAnchor, constant: Sizes.Padding.double),
 			buttonCreateTask.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			buttonCreateTask.widthAnchor.constraint(equalToConstant: Sizes.L.width),
-			buttonCreateTask.heightAnchor.constraint(equalToConstant: Sizes.L.height)
+			
+			// Минимальные размеры (защита от слишком маленькой кнопки)
+			buttonCreateTask.widthAnchor.constraint(greaterThanOrEqualToConstant: Sizes.L.width),
+			buttonCreateTask.heightAnchor.constraint(greaterThanOrEqualToConstant: Sizes.L.height),
+			
+			// Максимальная ширина (чтобы не растягивалась на весь экран)
+			buttonCreateTask.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.8)
+			
+//			buttonCreateTask.topAnchor.constraint(equalTo: sliderPriority.bottomAnchor, constant: Sizes.Padding.double),
+//			buttonCreateTask.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//			buttonCreateTask.widthAnchor.constraint(equalToConstant: Sizes.L.width),
+//			buttonCreateTask.heightAnchor.constraint(equalToConstant: Sizes.L.height)
 		])
 	}
 }
