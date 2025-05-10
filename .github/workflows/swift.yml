@@ -15,6 +15,5 @@ jobs:
       - run: brew tap tuist/tuist
       - run: brew install --formula tuist@4.43.1
       - run: brew install swiftlint
-      - run: brew install swiftgen
       - run: tuist build
   
