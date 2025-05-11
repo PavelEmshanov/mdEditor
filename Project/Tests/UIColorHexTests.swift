@@ -1,5 +1,5 @@
 import XCTest
-@testable import mdEditor
+@testable import MdEditor
 
 // swiftlint:disable force_cast
 
