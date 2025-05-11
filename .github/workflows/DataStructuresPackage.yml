@@ -3,19 +3,19 @@ name: DataStructuresPackage
 on:
   pull_request:
     branches:
-      -develop
+      - develop
 
 jobs:
   build:
     name: Test DataStructuresPackage
     runs-on: macos-latest
     steps:
-      - Uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Build
         run: |
-         cd Packages/DataStructuresPackage
-         swift build -v
+          cd Packages/DataStructuresPackage
+          swift build -v
       - name: Run tests
-        run: |
-         cd Packages/DataStructuresPackage
-         swift test -v
+        run: | 
+          cd Packages/DataStructuresPackage
+          swift test -v

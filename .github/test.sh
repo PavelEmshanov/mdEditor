@@ -1,5 +1,5 @@
 cd ./Project
 xcodebuild test-without-building \
-	-workspace 'MdEditor.xcworkspace' \
-	-scheme 'MdEditor' \
-	-destination 'platform=i0S Simulator, name=iPhone 14 Pro'
+    -workspace 'MdEditor.xcworkspace' \
+    -scheme 'MdEditor' \
+    -destination 'platform=iOS Simulator,name=iPhone 14 Pro'
