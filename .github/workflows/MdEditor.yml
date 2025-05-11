@@ -1,5 +1,4 @@
 name: MdEditor
-
 on:
   pull_request:
     branches:
@@ -7,30 +6,16 @@ on:
   push:
     branches:
       - main
-
 jobs:
   build:
     name: Build MdEditor
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Swift 6.0
-        run: |
-          # Устанавливаем Swift 6.0
-          wget https://download.swift.org/swift-6.0-release/xcode/swift-6.0-RELEASE/swift-6.0-RELEASE-osx.pkg -O swift.pkg
-          sudo installer -pkg swift.pkg -target /
-          echo "Installed Swift version:"
-          swift --version
-          
-      - name: Install Tuist
-        run: |
-          # Устанавливаем Tuist через официальный скрипт (более надежный способ)
-          curl -Ls https://install.tuist.io | bash -s -- "4.43.1"
-          export PATH="$HOME/.tuist-bin:$PATH"
-          echo "Installed Tuist version:"
-          tuist version
-          
+      - uses: jdx/mise-action@v2
+      - run: brew tap tuist/tuist
+      - run: brew install --formula tuist@4.43.1
+      - run: brew install swiftlint
       - name: Build
         run: bash ./.github/build.sh
         
