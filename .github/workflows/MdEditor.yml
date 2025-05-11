@@ -1,8 +1,10 @@
 name: MdEditor
-
 on:
   pull_request:
-    branches: 
+    branches:
+      - dev
+  push:
+    branches:
       - main
 
 jobs:
