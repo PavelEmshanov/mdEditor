@@ -14,21 +14,25 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Install Swift 6.0 via swiftenv
+
+      - name: Install Swift 6.0
         run: |
-           # Устанавливаем Swift через официальный .pkg
-          wget https://download.swift.org/swift-6.0-release/xcode/swift-6.0-RELEASE/swift-6.0-RELEASE-osx.pkg
-          sudo installer -pkg swift-6.0-RELEASE-osx.pkg -target /
+          # Устанавливаем Swift 6.0
+          wget https://download.swift.org/swift-6.0-release/xcode/swift-6.0-RELEASE/swift-6.0-RELEASE-osx.pkg -O swift.pkg
+          sudo installer -pkg swift.pkg -target /
+          echo "Installed Swift version:"
           swift --version
           
       - name: Install Tuist
         run: |
-          brew tap tuist/tuist
-          brew install --formula tuist@4.43.1
+          # Устанавливаем Tuist через официальный скрипт (более надежный способ)
+          curl -Ls https://install.tuist.io | bash -s -- "4.43.1"
+          export PATH="$HOME/.tuist-bin:$PATH"
+          echo "Installed Tuist version:"
+          tuist version
           
       - name: Build
-        run: ./.github/build.sh
+        run: bash ./.github/build.sh
         
       - name: Test
-        run: ./.github/test.sh
+        run: bash ./.github/test.sh
