@@ -1,5 +1,5 @@
 cd ./Project
-tuist fetch
+tuist install
 tuist generate
 xcodebuild clean -quiet
 xcodebuild build-for-testing\

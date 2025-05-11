@@ -16,8 +16,8 @@ let swiftLintScript = TargetScript.post(script: swiftLintScriptBody, name: "Swif
 let project = Project(
 	name: "MdEditor",
 	packages: [
-		.local(path: .relativeToManifest("../Package/TaskManagerPackage")),
-		.local(path: .relativeToManifest("../Package/DataStructuresPackage")),
+		.local(path: .relativeToManifest("../Packages/TaskManagerPackage")),
+		.local(path: .relativeToManifest("../Packages/DataStructuresPackage")),
 	],
 	settings: .settings(
 		base: [
