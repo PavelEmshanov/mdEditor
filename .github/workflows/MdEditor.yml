@@ -1,4 +1,4 @@
-name: build
+name: MdEditor
 on:
   pull_request:
     branches:
@@ -8,10 +8,11 @@ on:
       - main
 jobs:
   build:
-    name: Build
+    name: Build MdEditor
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
       - run: brew tap tuist/tuist
       - run: brew install --formula tuist@4.43.1
       - run: brew install swiftlint
