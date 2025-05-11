@@ -13,7 +13,11 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jdx/mise-action@v2
+      - name: Install Swift 6.0
+        run: |
+          brew update
+          brew install swift
+          swift --version
       - run: brew tap tuist/tuist
       - run: brew install --formula tuist@4.43.1
       - name: Build
