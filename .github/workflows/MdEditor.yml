@@ -17,9 +17,9 @@ jobs:
       
       - name: Install Swift 6.0 via swiftenv
         run: |
-          brew install swiftenv
-          swiftenv install 6.0
-          swiftenv global 6.0
+           # Устанавливаем Swift через официальный .pkg
+          wget https://download.swift.org/swift-6.0-release/xcode/swift-6.0-RELEASE/swift-6.0-RELEASE-osx.pkg
+          sudo installer -pkg swift-6.0-RELEASE-osx.pkg -target /
           swift --version
           
       - name: Install Tuist
