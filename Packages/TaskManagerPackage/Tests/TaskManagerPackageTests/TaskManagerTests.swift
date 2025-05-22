@@ -1,68 +1,111 @@
+//
+//  TaskManagerTests.swift
+//
+
 import XCTest
 @testable import TaskManagerPackage
 
 final class TaskManagerTests: XCTestCase {
-
-	private let regularTask = RegularTask(title: "Regular task")
-	private let importantTask = ImportantTask(title: "Important task", taskPriority: .high)
-
-	func test_addingTask_shouldBeCorectCountTasks() {
+	
+	private let completedTask = Task(title: "completedTask", completed: true)
+	private let uncompletedTask = Task(title: "uncompletedTask", completed: false)
+	
+	func test_allTasks_add2Tasks_shouldBe2Tasks() {
 		let sut = makeSut()
-
-		XCTAssertEqual(sut.allTasks().count, 2, "Количество добавленных заданий не соответствует, ожидалось 2")
-	}
-
-	func test_gettingListCompletedTask_shouldAllCompletedTask() {
-		let sut = makeSut()
-		sut.allTasks()[0].completed.toggle()
-
-		XCTAssertTrue(sut.completedTasks()[0].completed, "Получено не завершенное задание")
-		XCTAssertEqual(sut.completedTasks().count, 1, "Ошибка получения выполненных заданий, не совпадает кол-во задач")
-	}
-
-	func test_gettingListUncompletedTask_shouldAllUncompletedTask() {
-		let sut = makeSut()
-		sut.allTasks()[0].completed.toggle()
 		
-		XCTAssertFalse(sut.uncompletedTasks()[0].completed, "Получено завершенное задание")
-		XCTAssertEqual(sut.uncompletedTasks().count, 1, "Ошибка получения выполненных заданий, не совпадает кол-во задач")
-	}
-
-	func test_addNewTask_shouldBeAddedTask() {
-		let sut = makeSut()
-		sut.addTask(task: RegularTask(title: "New Regular task 1"))
-		sut.addTask(task: RegularTask(title: "New Regular task 2"))
-		sut.addTask(task: ImportantTask(title: "New Important task 1", taskPriority: .high))
-
-
-		XCTAssertEqual(sut.allTasks().count, 5, "Количество добавленных заданий не соответствует, ожидалось 5")
-	}
-
-	func test_addArrayOfTasks_shouldBeAddedTasks() {
-		let sut = makeSut()
-		let arrayOfTasks = [
-		RegularTask(title: "New Regular task 1"),
-		RegularTask(title: "New Regular task 2"),
-		ImportantTask(title: "New Important task 1", taskPriority: .high)
-		]
-
-		sut.addTasks(tasks: arrayOfTasks)
-
-		XCTAssertEqual(sut.allTasks().count, 5, "Количество добавленных заданий не соответствует, ожидалось 5")
-	}
-
-	func test_removeAllTasks_shouldBeDeleted() {
-		let sut = makeSut()
-		sut.removeTask(task: importantTask)
+		let allTasks = sut.allTasks()
 		
-		XCTAssertFalse(sut.allTasks()[0] is ImportantTask, "Удалено не требуемая задача")
+		XCTAssertEqual(allTasks.count, 2, "При получении списка всех задач, получены не все.")
+		XCTAssertTrue(allTasks.contains(completedTask), "Отсутствует задача 1")
+		XCTAssertTrue(allTasks.contains(uncompletedTask), "Отсутствует задача 2")
+	}
+	
+	func test_completedTasks_add1CompletedAnd1Uncompleted_shouldBe1Task() {
+		let sut = makeSut()
+		
+		let completedTasks = sut.completedTasks()
+		
+		XCTAssertEqual(completedTasks.count, 1, "В списке завершенных задач должна была остаться 1 задача")
+		XCTAssertTrue(
+			completedTasks.contains(completedTask),
+			"В списке завершенных задач не оказалось завершенной задачи"
+		)
+		XCTAssertFalse(
+			completedTasks.contains(uncompletedTask),
+			"В списке завершенных задач попалась незавершенная задача"
+		)
+	}
+	
+	func test_uncompletedTasks_add1CompletedAnd1Uncompleted_shouldBe1Task() {
+		let sut = makeSut()
+		
+		let uncompletedTasks = sut.uncompletedTasks()
+		
+		XCTAssertEqual(uncompletedTasks.count, 1, "В списке незавершенных задач должна была остаться 1 задача")
+		XCTAssertTrue(
+			uncompletedTasks.contains(uncompletedTask),
+			"В списке незавершенных задач не оказалось незавершенных задач"
+		)
+		XCTAssertFalse(
+			uncompletedTasks.contains(completedTask),
+			"В списке незавершенных задач попалась завершенная задача"
+		)
+	}
+	
+	func test_addTask_add1Task_shouldBe1Task() {
+		let sut = TaskManager()
+		
+		sut.addTask(task: uncompletedTask)
+		let allTasks = sut.allTasks()
+		
+		XCTAssertTrue(
+			allTasks.contains(uncompletedTask),
+			"После добавления задачи, она должна быть в списке всех задач"
+		)
+	}
+	
+	func test_addTasks_add2Tasks_shouldBe2Tasks() {
+		let sut = TaskManager()
+		
+		sut.addTasks(tasks: [completedTask, uncompletedTask])
+		let allTasks = sut.allTasks()
+		
+		XCTAssertEqual(allTasks.count, 2, "После добавления 2х задач, они должны быть в списке всех задач")
+		XCTAssertTrue(
+			allTasks.contains(completedTask),
+			"После добавления 2х задач, добавленная завершенная задача отсутствует"
+		)
+		XCTAssertTrue(
+			allTasks.contains(uncompletedTask),
+			"После добавления 2х задач, добавленная незавершенная задача отсутствует"
+		)
+	}
+	
+	func test_removeTask_add2TasksAndRemove1Task_shouldBe1Task() {
+		let sut = makeSut()
+		
+		sut.removeTask(task: completedTask)
+		let allTasks = sut.allTasks()
+		
+		XCTAssertEqual(
+			allTasks.count, 1,
+			"После удаления завершенной задачи из спика из 2х задач, осталось больше или меньше 1 задачи."
+		)
+		XCTAssertFalse(
+			allTasks.contains(completedTask),
+			"После удаления завершенной задачи из списка из 2х задач, не должно было остаться завершенной задачи."
+		)
+		XCTAssertTrue(
+			allTasks.contains(uncompletedTask),
+			"После удаления завершенной задачи из списка из 2х задач, должна была остаться только завершенная задача."
+		)
 	}
 }
 
 // MARK: - TestData
 
-extension TaskManagerTests {
+private extension TaskManagerTests {
 	func makeSut() -> TaskManager {
-		TaskManager(taskList: [regularTask, importantTask])
+		TaskManager(taskList: [completedTask, uncompletedTask])
 	}
 }

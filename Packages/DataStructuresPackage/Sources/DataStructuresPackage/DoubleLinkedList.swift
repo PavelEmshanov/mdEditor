@@ -1,5 +1,5 @@
 //
-//  DoubleLinkedList.swift
+//  DoublyLinkedList.swift
 //
 
 import Foundation
@@ -8,17 +8,17 @@ import Foundation
 public struct DoubleLinkedList<T> {
 	
 	/// Узел двунаправленного связаного списка.
-	final class Node<T> {
+	final class Node {
 		/// Хранимые данные.
 		var value: T
 		
 		/// Ссылка на предыдущий узел если он есть.
-		var previous: Node<T>?
+		var previous: Node?
 		
 		/// Ссылка на следующий узел, если он есть.
-		var next: Node<T>?
+		var next: Node?
 		
-		init(_ value: T, previous: Node<T>? = nil, next: Node<T>? = nil) {
+		init(_ value: T, previous: Node? = nil, next: Node? = nil) {
 			self.value = value
 			self.previous = previous
 			self.next = next
@@ -26,10 +26,10 @@ public struct DoubleLinkedList<T> {
 	}
 	
 	/// Начало списка.
-	private var head: Node<T>?
+	private(set) var head: Node?
 	
 	/// Конец списка.
-	private var tail: Node<T>?
+	private(set) var tail: Node?
 	
 	/// Возвращает количество элементов списка.
 	///
@@ -152,10 +152,10 @@ private extension DoubleLinkedList {
 	/// Сложность O(n)
 	/// - Parameter index: Индекс, по которому нужно вернуть узел списка.
 	/// - Returns: Возвращаемый узел списка.
-	private func node(at index: Int) -> Node<T>? {
+	private func node(at index: Int) -> Node? {
 		guard index >= 0 && index < count else { return nil }
 		var currentIndex = 0
-		var currentNode: Node<T>?
+		var currentNode: Node?
 		if index <= count / 2 {
 			currentNode = head
 			while currentIndex < index {
@@ -183,25 +183,5 @@ extension DoubleLinkedList {
 	/// Значение конца списка.
 	var tailValue: T? {
 		tail?.value
-	}
-}
-
-extension DoubleLinkedList: CustomStringConvertible {
-	public var description: String {
-		var values = [String]()
-		var current = head
-		
-		while current != nil {
-			values.append("\(current!)")
-			current = current?.next
-		}
-		
-		return "size: \(count); values: " + values.joined(separator: " <-> ")
-	}
-}
-
-extension DoubleLinkedList.Node: CustomStringConvertible {
-	public var description: String {
-		"\(value)"
 	}
 }

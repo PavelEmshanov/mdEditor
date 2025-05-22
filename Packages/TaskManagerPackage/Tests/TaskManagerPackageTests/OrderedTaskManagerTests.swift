@@ -1,31 +1,82 @@
+//
+//  OrderedTaskManagerTests.swift
+//
+
 import XCTest
 @testable import TaskManagerPackage
 
 final class OrderedTaskManagerTests: XCTestCase {
-	private let regularTask1 = RegularTask(title: "Regular task 1")
-	private let regularTask2 = RegularTask(title: "Regular task 2")
-	private let importantTask1 = ImportantTask(title: "Important task 1", taskPriority: .high)
-	private let importantTask2 = ImportantTask(title: "Important task 2", taskPriority: .medium)
-
-	func test_gettingSortedListCompletedTasks_sortedListShouldBeRecevied() {
+	
+	func test_allTasks_shouldBe5TaskOrderedByPriority() {
+		// Arrange
 		let sut = makeSut()
-
-		sut.addTask(task: regularTask1)
-		sut.addTask(task: importantTask1)
-		sut.addTask(task: regularTask2)
-		sut.addTask(task: importantTask2)
-
-		XCTAssertEqual(sut.uncompletedTasks()[0].title, importantTask1.title)
-		XCTAssertEqual(sut.uncompletedTasks()[2].title, regularTask1.title)
-
+		let validResultTasks: [TaskManagerPackage.Task] = [
+			MockTaskManager.highImportantTask,
+			MockTaskManager.mediumImportantTask,
+			MockTaskManager.lowImportantTask,
+			MockTaskManager.completedRegularTask,
+			MockTaskManager.uncompletedRegularTask
+		]
+		
+		// Act
+		let resultTasks = sut.allTasks()
+		
+		// Assert
+		XCTAssertEqual(resultTasks.count, 5, "При выборке всех задач, ожидалось, что их будет 5 штук.")
+		XCTAssertEqual(
+			resultTasks,
+			validResultTasks,
+			"При выборке всех задач, порядок задач не совпал с сортировкой по приоритету."
+		)
+		
 	}
-
+	
+	func test_completedTasks_shouldBeAllCompletedTaskOrderedByPriority() {
+		// Arrange
+		let sut = makeSut()
+		let validResultTasks: [TaskManagerPackage.Task] = [MockTaskManager.completedRegularTask]
+		
+		// Act
+		let resultTasks = sut.completedTasks()
+		
+		// Assert
+		XCTAssertEqual(resultTasks.count, 1, "При выборке завершенных задач, ожидалось, что их будет 1 штука.")
+		XCTAssertEqual(
+			resultTasks,
+			validResultTasks,
+			"При выборке завершенных задач, порядок задач не совпал с сортировкой по приоритету."
+		)
+	}
+	
+	func test_uncompletedTasks_shouldBeAllUncompletedTaskOrderedByPriority() {
+		// Arrange
+		let sut = makeSut()
+		let validResultTasks: [TaskManagerPackage.Task] = [
+			MockTaskManager.highImportantTask,
+			MockTaskManager.mediumImportantTask,
+			MockTaskManager.lowImportantTask,
+			MockTaskManager.uncompletedRegularTask,
+		]
+		
+		// Act
+		let resultTasks = sut.uncompletedTasks()
+		
+		// Assert
+		XCTAssertEqual(resultTasks.count, 4, "При выборке незавершенных задач, ожидалось, что их будет 4 штуки.")
+		XCTAssertEqual(
+			resultTasks,
+			validResultTasks,
+			"При выборке незавершенных задач, порядок задач не совпал с сортировкой по приоритету."
+		)
+	}
 }
+
 // MARK: - TestData
 
-extension OrderedTaskManagerTests {
+private extension OrderedTaskManagerTests {
 	func makeSut() -> OrderedTaskManager {
-		let taskManager = TaskManager()
-		return OrderedTaskManager(taskManager: taskManager)
+		let mockTaskManager = MockTaskManager()
+		let sut = OrderedTaskManager(taskManager: mockTaskManager)
+		return sut
 	}
 }

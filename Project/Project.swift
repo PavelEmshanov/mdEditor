@@ -5,7 +5,7 @@ enum ProjectSettings {
 	public static var projectName: String { "MdEditor" }
 	public static var appVersionName: String { "1.0.0" }
 	public static var appVersionBuild: Int { 1 }
-	public static var developmentTeam: String { "" }
+	public static var developmentTeam: String { "9TKSP79H7H" }
 	public static var targetVersion: String { "15.0" }
 	public static var bundleId: String { "\(organizationName).\(projectName)" }
 }
@@ -14,7 +14,7 @@ let swiftLintScriptBody = "SwiftLint/swiftlint --fix && SwiftLint/swiftlint"
 let swiftLintScript = TargetScript.post(script: swiftLintScriptBody, name: "SwiftLint", basedOnDependencyAnalysis: false)
 
 let project = Project(
-	name: "MdEditor",
+	name: ProjectSettings.projectName,
 	packages: [
 		.local(path: .relativeToManifest("../Packages/TaskManagerPackage")),
 		.local(path: .relativeToManifest("../Packages/DataStructuresPackage")),
@@ -30,10 +30,10 @@ let project = Project(
 	),
 	targets: [
 		.target(
-			name: "MdEditor",
+			name: ProjectSettings.projectName,
 			destinations: .iOS,
 			product: .app,
-			bundleId: "PavelEmshanov.MdEditor",
+			bundleId: ProjectSettings.bundleId,
 			deploymentTargets: .iOS(ProjectSettings.targetVersion),
 			infoPlist: .file(path: "Environments/Info.plist"),
 			sources: ["Sources/**", "Shared/**"],
@@ -42,15 +42,23 @@ let project = Project(
 			dependencies: [.package(product: "DataStructuresPackage"), .package(product: "TaskManagerPackage")]
 		),
 		.target(
-			name: "MdEditorTests",
+			name: "\(ProjectSettings.projectName)Tests",
 			destinations: .iOS,
 			product: .unitTests,
-			bundleId: "PavelEmshanov.MdEditorTests",
+			bundleId: "\(ProjectSettings.bundleId)Tests",
 			deploymentTargets: .iOS(ProjectSettings.targetVersion),
-			sources: ["Tests/**"],
-			resources: [],
-			dependencies: [.target(name: "MdEditor")]
+			sources: ["Tests/Sources/**"],
+			dependencies: [.target(name: ProjectSettings.projectName)]
 		),
+		.target(
+			name: "\(ProjectSettings.projectName)UITests",
+			destinations: .iOS,
+			product: .uiTests,
+			bundleId: "\(ProjectSettings.bundleId)UITests",
+			deploymentTargets: .iOS(ProjectSettings.targetVersion),
+			sources: ["UITests/Sources/**"],
+			dependencies: [.target(name: ProjectSettings.projectName)]
+		)
 	],
 	resourceSynthesizers: [.strings()]
 )

@@ -1,87 +1,122 @@
+//
+//  DoublyLinkedListTests.swift
+//
+
 import XCTest
 @testable import DataStructuresPackage
 
-final class DoubleeLinkedListTests: XCTestCase {
-	func test_init_woElements_shouldBeEmpty() {
+import XCTest
+
+final class DoublyLinkedListTests: XCTestCase {
+	
+	func test_init_emptyList_shouldBeEmpty() {
 		let sut = DoubleLinkedList<Int>()
-
-		XCTAssertTrue(sut.isEmpty, "Список создан не пустым")
+		
+		XCTAssertTrue(sut.isEmpty, "Список не пуст.")
+		XCTAssertEqual(sut.count, 0, "Пустой список возвращает количество значений не равное 0.")
 	}
-
-	func test_init_withOneElement_listShouldBeOneElement() {
-		let testValue = 10
-		let sut = DoubleLinkedList<Int>(testValue)
-
-		XCTAssertEqual(sut.count, 1, "Список имеет не верное количество элементов, ожидается 1 элемент")
+	
+	func test_init_withSingleElement_shouldBeCorrect() {
+		let value = 42
+		
+		let sut = DoubleLinkedList(value)
+		
+		XCTAssertFalse(sut.isEmpty, "Список с одним элементом не должен быть пуст.")
+		XCTAssertEqual(sut.count, 1, "Количество элементов в списке должно быть равно 1.")
 	}
-
-	func test_pushElements_twoElements_countShouldBeCorrect() {
+	
+	func test_push_twoValues_shouldBeCorrectCount() {
 		var sut = DoubleLinkedList<Int>()
-
+		
 		sut.push(1)
 		sut.push(2)
-
-		XCTAssertEqual(sut.value(at: 0), 2, "Функция добавляет каждый новый элемент не в начало списка")
-		XCTAssertEqual(sut.count, 2, "Не верное количество элементов в списке")
+		
+		XCTAssertFalse(sut.isEmpty, "Список не должен быть пуст.")
+		XCTAssertEqual(sut.count, 2, "Количество элементов в списке должно быть равно 2.")
 	}
-
-	func test_appendElements_twoElements_countShouldBeCorrect() {
+	
+	func test_append_twoValues_shouldBeCorrectCount() {
 		var sut = DoubleLinkedList<Int>()
-
+		
 		sut.append(1)
 		sut.append(2)
-
-		XCTAssertEqual(sut.tailValue, 2, "Функция добавляет каждый новый элемент не в конец списка")
-		XCTAssertEqual(sut.count, 2, "Не верное количество элементов в списке")
+		
+		XCTAssertFalse(sut.isEmpty, "Список не должен быть пуст.")
+		XCTAssertEqual(sut.count, 2, "Количество элементов в списке должно быть равно 2.")
 	}
-
-	func test_insertElement_valueShouldBeCorrect() {
-		var sut = DoubleLinkedList<Int>(1)
-		sut.push(2)
-
-		sut.insert(5, after: 0)
-
-		XCTAssertEqual(sut.value(at: 1), 5, "Вставленно по некорректному индексу")
+	
+	func test_insert_shouldBeCorrect() {
+		var sut = DoubleLinkedList<Int>()
+		sut.append(1)
+		sut.append(3)
+		
+		sut.insert(2, after: 0)
+		
+		XCTAssertEqual(sut.headValue, 1, "Голова списка содержит неверное значение.")
+		XCTAssertEqual(sut.tailValue, 3, "Хвост списка содержит неверное значение.")
+		XCTAssertEqual(sut.count, 3, "В списке неверное количество элементов.")
 	}
-
-	func test_pop_valueAndCountShouldBeCorrect() {
-		var sut = DoubleLinkedList<Int>(1)
+	
+	func test_pop_fromListWithTwoElements_shouldBeCorrectCountAndValue() {
+		var sut = DoubleLinkedList<Int>()
+		sut.append(1)
 		sut.append(2)
-
-		let removableValue = sut.pop()
-
-		XCTAssertEqual(removableValue, 1, "Извлеченное значение не корректено")
-		XCTAssertEqual(sut.count, 1, "Удаление не произведено, не корректное количество элементов в списке")
+		
+		let poppedValue = sut.pop()
+		
+		XCTAssertEqual(poppedValue, 1, "Список вернул неверное значение.")
+		XCTAssertEqual(sut.headValue, 2, "Голова списка содержит неверное значение.")
+		XCTAssertEqual(sut.tailValue, 2, "Хвост списка содержит неверное значение.")
+		XCTAssertEqual(sut.count, 1, "В списке неверное количество элементов.")
 	}
-
-	func test_removeLast_valueAndCountShouldBeCorrect() {
-		var sut = DoubleLinkedList<Int>(1)
+	
+	func test_removeLast_fromListWithTwoElements_shouldBeCorrectCountAndValue() {
+		var sut = DoubleLinkedList<Int>()
+		sut.append(1)
 		sut.append(2)
-
-		let removableValue = sut.removeLast()
-
-		XCTAssertEqual(removableValue, 2, "Извлеченное значение не корректено")
-		XCTAssertEqual(sut.count, 1, "Удаление не произведено, не корректное количество элементов в списке")
+		
+		let removedValue = sut.removeLast()
+		
+		XCTAssertEqual(removedValue, 2, "Список вернул неверное значение.")
+		XCTAssertEqual(sut.headValue, 1, "Голова списка содержит неверное значение.")
+		XCTAssertEqual(sut.tailValue, 1, "Хвост списка содержит неверное значение.")
+		XCTAssertEqual(sut.count, 1, "В списке неверное количество элементов.")
 	}
-
-	func test_removeAfter_valueAndCountShouldBeCorrect() {
-		var sut = DoubleLinkedList<Int>(1)
+	
+	func test_removeAfter_fromListWithThreeElements_shouldBeCorrectCountAndValue() {
+		var sut = DoubleLinkedList<Int>()
+		sut.append(1)
 		sut.append(2)
 		sut.append(3)
 		
-		let removableValue = sut.remove(after: 0)
+		let removedValue = sut.remove(after: 0)
 		
-		XCTAssertEqual(removableValue, 2, "Извлеченное значение не корректено")
-		XCTAssertEqual(sut.count, 2, "Удаление не произведено, не корректное количество элементов в списке")
+		XCTAssertEqual(removedValue, 2, "Список вернул неверное значение.")
+		XCTAssertEqual(sut.headValue, 1, "Голова списка содержит неверное значение.")
+		XCTAssertEqual(sut.tailValue, 3, "Хвост списка содержит неверное значение.")
+		XCTAssertEqual(sut.count, 2, "В списке неверное количество элементов.")
 	}
-
-	func test_value_valueShouldBeCorrect() {
-		var sut = DoubleLinkedList<Int>(1)
+	
+	func test_valueAtIndex_shouldBeCorrectValues() {
+		var sut = DoubleLinkedList<Int>()
+		sut.append(1)
 		sut.append(2)
 		sut.append(3)
-
-		let valueAtIndex = sut.value(at: 1)
-
-		XCTAssertEqual(valueAtIndex, 2, "Извлеченное значение не корректено")
+		sut.append(4)
+		sut.append(5)
+		
+		let valueAt0 = sut.value(at: 0)
+		let valueAt1 = sut.value(at: 1)
+		let valueAt2 = sut.value(at: 2)
+		let valueAt3 = sut.value(at: 3)
+		let valueAt4 = sut.value(at: 4)
+		let valueAt5 = sut.value(at: 5)
+		
+		XCTAssertEqual(valueAt0, 1, "Список вернул неверное значение по запрошенному индексу.")
+		XCTAssertEqual(valueAt1, 2, "Список вернул неверное значение по запрошенному индексу.")
+		XCTAssertEqual(valueAt2, 3, "Список вернул неверное значение по запрошенному индексу.")
+		XCTAssertEqual(valueAt3, 4, "Список вернул неверное значение по запрошенному индексу.")
+		XCTAssertEqual(valueAt4, 5, "Список вернул неверное значение по запрошенному индексу.")
+		XCTAssertNil(valueAt5, "Список вернул несуществующее значение.")
 	}
 }

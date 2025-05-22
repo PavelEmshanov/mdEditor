@@ -3,53 +3,49 @@ import XCTest
 
 final class ImportantTaskTests: XCTestCase {
 	
-	func test_init_withTitle_shoulBeCorrectTitle() {
+	func test_init_shouldHaveCorrect() {
 		let currentDate = Date()
-		let sut = ImportantTask(title: title, taskPriority: taskPriorityHigh, createDate: currentDate)
-
-		XCTAssertEqual(sut.title, title, "Не верно работающий инициализатор Наименования при создании Task")
-
-	}
-
-	func test_init_withHighPriority_shoulBeCorrectTaskPriorityAndDeadline() {
-		let currentDate = Date()
-		let sut = ImportantTask(title: title, taskPriority: taskPriorityHigh, createDate: currentDate)
 		
-		XCTAssertEqual(sut.taskPriority, taskPriorityHigh, "Инициализирован не корректный приоритет заданияю. Ожидался .high")
+		let sut = ImportantTask(title: title, taskPriority: .high, createDate: currentDate)
 		
-		XCTAssertEqual(sut.deadLine, Calendar.current.date(byAdding: .day, value: 1, to: currentDate), "Ошибка установки даты дедлайна задания")
-	}
-
-	func test_init_withMediumPriority_shoulBeCorrectTaskPriorityAndDeadline() {
-		let currentDate = Date()
-		let sut = ImportantTask(title: title, taskPriority: taskPriorityMedium, createDate: currentDate)
-
-		XCTAssertEqual(sut.taskPriority, taskPriorityMedium, "Инициализирован не корректный приоритет заданияю. Ожидался .medium")
-		
-		XCTAssertEqual(sut.deadLine, Calendar.current.date(byAdding: .day, value: 2, to: currentDate), "Ошибка установки даты дедлайна задания")
-	}
-
-	func test_init_withLowPriority_shoulBeCorrectTaskPriorityAndDeadline() {
-		let currentDate = Date()
-		let sut = ImportantTask(title: title, taskPriority: taskPriorityLow, createDate: currentDate)
-		
-		XCTAssertEqual(sut.taskPriority, taskPriorityLow, "Инициализирован не корректный приоритет заданияю. Ожидался .low")
-		
-		XCTAssertEqual(sut.deadLine, Calendar.current.date(byAdding: .day, value: 3, to: currentDate), "Ошибка установки даты дедлайна задания")
-	}
-
-	func test_init_withCompletedTrue_shoulBeCorrect() {
-		let sut = ImportantTask(title: title, taskPriority: taskPriorityMedium)
-		sut.completed = true
-
-		XCTAssertTrue(sut.completed, "Задание создано с ошибкой в статусе свойства Completed, ожидалось true")
+		XCTAssertEqual(sut.title, title, "Не совпадает имя задания с переданным в инициализатор.")
+		XCTAssertEqual(sut.taskPriority, .high, "Не совпадает приоритет задания с переданным в инициализатор.")
+		XCTAssertFalse(sut.completed, "Не совпадает статус задания с переданным в инициализатор.")
 	}
 	
-	func test_init_withoutCompleted_propertyCompletedShouldBeFalse() {
-		let sut = ImportantTask(title: title, taskPriority: taskPriorityMedium)
-		sut.completed = false
-
-		XCTAssertFalse(sut.completed, "Задание созданно с неверным статусом Completed, ожидалось false")
+	func test_deadline_lowPriorityTask() {
+		let currentDate = Date()
+		let deadLine = Calendar.current.date(byAdding: .day, value: 3, to: currentDate)!
+		
+		let sut = ImportantTask(title: title, taskPriority: .low, createDate: currentDate)
+		
+		XCTAssertEqual(sut.deadLine, deadLine, "Неверный deadLine для задания с приоритетом low.")
+	}
+	
+	func test_deadline_mediumPriorityTask() {
+		let currentDate = Date()
+		let deadLine = Calendar.current.date(byAdding: .day, value: 2, to: currentDate)!
+		
+		let sut = ImportantTask(title: title, taskPriority: .medium, createDate: currentDate)
+		
+		XCTAssertEqual(sut.deadLine, deadLine, "Неверный deadLine для задания с приоритетом medium.")
+	}
+	
+	func test_deadline_highPriorityTask() {
+		let currentDate = Date()
+		let deadLine = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
+		
+		let sut = ImportantTask(title: title, taskPriority: .high, createDate: currentDate)
+		
+		XCTAssertEqual(sut.deadLine, deadLine, "Неверный deadLine для задания с приоритетом high.")
+	}
+	
+	func test_completed_togglePropertyCompleted_propertyCompletedShouldBeTrue() {
+		let importantTask = ImportantTask(title: title, taskPriority: .high)
+		
+		importantTask.completed.toggle()
+		
+		XCTAssertTrue(importantTask.completed, "Задание должно было стать выполненным.")
 	}
 }
 

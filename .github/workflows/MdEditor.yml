@@ -12,7 +12,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jdx/mise-action@v2
       - run: brew tap tuist/tuist
       - run: brew install --formula tuist@4.43.1
       - run: brew install swiftlint
