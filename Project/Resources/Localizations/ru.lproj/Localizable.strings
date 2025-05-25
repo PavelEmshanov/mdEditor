@@ -6,6 +6,7 @@
 
 // TodoList scene
 "TodoList.title" = "Список задач";
+"TodoList.deadline" = "Крайний срок";
 
 // Create task scene
 "Create_task.create_button" = "Создать";
@@ -14,3 +15,11 @@
 "Create_task.important_item" = "Важное";
 "Create_task.priority_label" = "Приоритет (только для важных заданий):";
 "Create_task.title" = "Создание задания";
+
+// Show error
+"I_show_error.title" = "Ошибка";
+"I_show_error.ok_button" = "Ок";
+"Login_presenter.wrong_password" = "Неверный пароль.";
+"Login_presenter.wrong_login" = "Неверный логин.";
+"Login_presenter.empty_fields" = "Пустые поля логин или пароль.";
+"Login_presenter.error_auth" = "Пустые поля логин или пароль.";

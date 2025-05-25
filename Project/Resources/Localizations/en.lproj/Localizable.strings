@@ -6,6 +6,7 @@
 
 // TodoList scene
 "TodoList.title" = "TodoList";
+"TodoList.deadline" = "Deadline";
 
 // Create task scene
 "Create_task.create_button" = "Create";
@@ -14,3 +15,13 @@
 "Create_task.important_item" = "Important";
 "Create_task.priority_label" = "Priority (for important tasks only):";
 "Create_task.title" = "Create task";
+
+// Show error
+"I_show_error.title" = "Error";
+"I_show_error.ok_button" = "Ok";
+"Login_presenter.wrong_password" = "Wrong password.";
+"Login_presenter.wrong_login" = "Wrong login.";
+"Login_presenter.empty_fields" = "Empty fields.";
+"Login_presenter.error_auth" = "Error auth.";
+
+

@@ -56,7 +56,7 @@ let project = Project(
 			product: .uiTests,
 			bundleId: "\(ProjectSettings.bundleId)UITests",
 			deploymentTargets: .iOS(ProjectSettings.targetVersion),
-			sources: ["UITests/Sources/**"],
+			sources: ["UITests/Sources/**", "Shared/**", "Resources/**"],
 			dependencies: [.target(name: ProjectSettings.projectName)]
 		)
 	],
